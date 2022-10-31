@@ -2,11 +2,11 @@
 	"functions": {
 		"api/**/*.[jt]s": { "runtime": "vercel-deno@2.0.2" }
 	},
-    "redirects": [
-        {
-          "source": "/",
-          "destination": "https://github.com/iGalaxyYT/sponsors-to-discord",
-          "permanent": true
-        }
-      ]
+	"redirects": [
+		{
+			"source": "/",
+			"destination": "https://github.com/iGalaxyYT/sponsors-to-discord",
+			"permanent": true
+		}
+	]
 }

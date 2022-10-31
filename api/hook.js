@@ -31,7 +31,7 @@ export default function handler(req, res) {
 	const sponsor = body.sponsorship.sponsor;
 	const { url } = req.query;
 
-	if (!url) return res.status(400);
+	if (!url) return res.status(400).send('Missing url param');
 
 	if (body.zen) {
 		sendInfo(
@@ -40,10 +40,9 @@ export default function handler(req, res) {
 			'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
 			body.zen
 		);
-		return res.status(200);
+		return res.status(200).send('Pong!');
 	}
 
-	res.status(200);
 	switch (body.action) {
 		case 'created': {
 			sendInfo(
@@ -95,4 +94,5 @@ export default function handler(req, res) {
 			break;
 		}
 	}
+	return res.status(200).send('Webhook sent');
 }

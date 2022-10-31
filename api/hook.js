@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+const fetch = import('node-fetch');
 
 function sendInfo(url, name, avatar, message) {
 	fetch(url, {

@@ -19,6 +19,7 @@ function sendInfo(url, name, avatar, message) {
             ],
             "attachments": []
           }`,
+		headers: { 'Content-Type': 'application/json' },
 	});
 }
 

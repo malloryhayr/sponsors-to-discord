@@ -37,6 +37,16 @@ app.use(async ctx => {
 
 	if (!url) return (ctx.response.status = 400);
 
+	if (body.zen) {
+		sendInfo(
+			url,
+			'ping',
+			'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
+			body.zen
+		);
+		return (ctx.response.status = 200);
+	}
+
 	switch (body.action) {
 		case 'created': {
 			ctx.response.status = 200;

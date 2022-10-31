@@ -1,0 +1,11 @@
+{
+	"name": "sponsors-to-discord",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "https://github.com/iGalaxyYT/sponsors-to-discord.git",
+	"author": "iGalaxyYT <contact@igalaxy.dev>",
+	"license": "MIT",
+	"dependencies": {
+		"node-fetch": "^3.2.10"
+	}
+}

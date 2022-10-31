@@ -1,10 +1,6 @@
-#!/user/bin/env deno run --allow-net
+import fetch from 'node-fetch';
 
-import { Application } from 'https://deno.land/x/oak@v11.1.0/mod.ts';
-
-const app = new Application();
-
-function sendInfo(url: string, name: string, avatar: string, message: string) {
+function sendInfo(url, name, avatar, message) {
 	fetch(url, {
 		method: 'POST',
 		body: `{
@@ -26,16 +22,16 @@ function sendInfo(url: string, name: string, avatar: string, message: string) {
 	});
 }
 
-function formatMoney(cents: number): string {
+function formatMoney(cents) {
 	return `\$${(cents / 100).toFixed(2)}`;
 }
 
-app.use(async ctx => {
-	const body = await ctx.request.body().value;
+export default function handler(req, res) {
+	const body = req.body;
 	const sponsor = body.sponsorship.sponsor;
-	const url = ctx.request.url.searchParams.get('url');
+	const { url } = req.query;
 
-	if (!url) return (ctx.response.status = 400);
+	if (!url) return res.status(400);
 
 	if (body.zen) {
 		sendInfo(
@@ -44,12 +40,12 @@ app.use(async ctx => {
 			'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
 			body.zen
 		);
-		return (ctx.response.status = 200);
+		return res.status(200);
 	}
 
+	res.status(200);
 	switch (body.action) {
 		case 'created': {
-			ctx.response.status = 200;
 			sendInfo(
 				url,
 				sponsor.login,
@@ -61,7 +57,6 @@ app.use(async ctx => {
 			break;
 		}
 		case 'cancelled': {
-			ctx.response.status = 200;
 			sendInfo(
 				url,
 				sponsor.login,
@@ -73,7 +68,6 @@ app.use(async ctx => {
 			break;
 		}
 		case 'edited': {
-			ctx.response.status = 200;
 			sendInfo(
 				url,
 				sponsor.login,
@@ -85,7 +79,6 @@ app.use(async ctx => {
 			break;
 		}
 		case 'tier_changed': {
-			ctx.response.status = 200;
 			sendInfo(
 				url,
 				sponsor.login,
@@ -99,10 +92,7 @@ app.use(async ctx => {
 			break;
 		}
 		default: {
-			ctx.response.status = 200;
 			break;
 		}
 	}
-});
-
-export default app.handle;
+}

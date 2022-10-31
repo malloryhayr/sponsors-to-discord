@@ -95,5 +95,5 @@ export default async function handler(req, res) {
 			break;
 		}
 	}
-	return res.status(200).send('Webhook sent');
+	return res.status(200).send(`Webhook sent to ${url}`);
 }

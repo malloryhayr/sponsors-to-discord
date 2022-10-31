@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
-function sendInfo(url, name, avatar, message) {
-	fetch(url, {
+async function sendInfo(url, name, avatar, message) {
+	await fetch(url, {
 		method: 'POST',
 		body: `{
             "username": "GitHub Sponsors",
@@ -27,7 +27,7 @@ function formatMoney(cents) {
 	return `\$${(cents / 100).toFixed(2)}`;
 }
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
 	const body = req.body;
 	const sponsor = body.sponsorship.sponsor;
 	const { url } = req.query;
@@ -35,7 +35,7 @@ export default function handler(req, res) {
 	if (!url) return res.status(400).send('Missing url param');
 
 	if (body.zen) {
-		sendInfo(
+		await sendInfo(
 			url,
 			'ping',
 			'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
@@ -46,7 +46,7 @@ export default function handler(req, res) {
 
 	switch (body.action) {
 		case 'created': {
-			sendInfo(
+			await sendInfo(
 				url,
 				sponsor.login,
 				sponsor.avatar_url,
@@ -57,7 +57,7 @@ export default function handler(req, res) {
 			break;
 		}
 		case 'cancelled': {
-			sendInfo(
+			await sendInfo(
 				url,
 				sponsor.login,
 				sponsor.avatar_url,
@@ -68,7 +68,7 @@ export default function handler(req, res) {
 			break;
 		}
 		case 'edited': {
-			sendInfo(
+			await sendInfo(
 				url,
 				sponsor.login,
 				sponsor.avatar_url,
@@ -79,7 +79,7 @@ export default function handler(req, res) {
 			break;
 		}
 		case 'tier_changed': {
-			sendInfo(
+			await sendInfo(
 				url,
 				sponsor.login,
 				sponsor.avatar_url,

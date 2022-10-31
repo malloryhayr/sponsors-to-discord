@@ -29,6 +29,7 @@ function formatMoney(cents) {
 
 export default async function handler(req, res) {
 	const body = req.body;
+	const { url } = req.query;
 
 	if (body.zen) {
 		await sendInfo(
@@ -41,7 +42,6 @@ export default async function handler(req, res) {
 	}
 
 	const sponsor = body.sponsorship.sponsor;
-	const { url } = req.query;
 
 	if (!url) return res.status(400).send('Missing url param');
 
